@@ -3,7 +3,7 @@ pipeline{
       agent any
       environment {
           dockerImage=''
-          registry= 'tanmaypatidar/docpipe'
+          imagename = 'tanmaypatidar/docpipe'
           registryCredential = 'tanmay_1'
       }
       
@@ -17,7 +17,7 @@ pipeline{
           stage('Docker Image'){
               steps{
                   script{
-                      dockerImage= docker.build registry
+                      dockerImage= docker.build imagename
                   }
               }
           }
@@ -26,7 +26,8 @@ pipeline{
               steps{
                   script{
                       docker.withRegistry('', registryCredential) {
-                          dockerImage.push()
+                          dockerImage.push("$BUILD_NUMBER")
+                              dockerImage.push('latest')
                       }
      }  
               }
