@@ -13,6 +13,17 @@ pipeline {
                 echo "Resource Group Getting built!"
             }
         }
+        stages {
+    stage('Copy Archive') {
+         steps {
+             script {
+                step ([$class: 'CopyArtifact',
+                    projectName: 'arifacts',
+                    filter: "packages/infra*.zip",
+                    target: 'Infra']);
+            }
+        }
+    }
         stage('Deploy') {
             steps {
                 echo 'Deploying....'
