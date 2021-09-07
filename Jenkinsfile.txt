@@ -1,6 +1,8 @@
 pipeline {
     agent any
-
+options {
+        copyArtifactPermission('java');
+    }
     stages {
         stage('Build') {
             steps {
@@ -13,20 +15,11 @@ pipeline {
                 echo "Successfull DONE"
             }
         }
-        
-    stage('Copy Archive') {
-         steps {
-             script {
-                step ([$class: 'CopyArtifact',
-                    projectName: 'arifacts',
-                    filter: "java*.zip",
-                    target: 'java']);
-            }
-        }
-    }
-        stage('Deploy') {
+       
+        stage('Coping artifacts') {
             steps {
-                echo 'Deploying....'
+                 build 'arifacts'
+                echo "ARCHIVING DONE"
             }
         }
     }
