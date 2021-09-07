@@ -7,13 +7,13 @@ pipeline {
                 echo 'Building..Tanmay'
             }
         }
-        stage('Test') {
+        stage('Run a java Program') {
             steps {
                 build 'java'
-                echo "Resource Group Getting built!"
+                echo "Successfull DONE"
             }
         }
-        stages {
+        
     stage('Copy Archive') {
          steps {
              script {
