@@ -19,8 +19,8 @@ pipeline {
              script {
                 step ([$class: 'CopyArtifact',
                     projectName: 'arifacts',
-                    filter: "packages/infra*.zip",
-                    target: 'Infra']);
+                    filter: "packages/java*.zip",
+                    target: 'java']);
             }
         }
     }
