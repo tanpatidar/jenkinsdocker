@@ -1,36 +1,26 @@
-pipeline{
-
-      agent any
-      environment {
-          dockerImage=''
-          imagename = 'tanmaypatidar/docpipe'
-          registryCredential = 'tanmay_1'
-      }
-      
-       stages {
-             stage('Checkout'){
-                steps{
-                checkout([$class: 'GitSCM', branches: [[name: '*/main']], extensions: [], userRemoteConfigs: [[url: 'https://github.com/tanpatidar/jenkinsdocker.git']]])
-                }
-          } 
-          
-          stage('Docker Image'){
-              steps{
-                  script{
-                      dockerImage= docker.build imagename
-                  }
-              }
-          }
-          
-        stage('Upload dockerHUb'){
-              steps{
-                  script{
-                      docker.withRegistry('', registryCredential) {
-                          dockerImage.push("$BUILD_NUMBER")
-                              dockerImage.push('latest')
-                      }
-     }  
-              }
+pipeline {
+    agent any
+options {
+        copyArtifactPermission('java');
+    }
+    stages {
+        stage('Build') {
+            steps {
+                echo 'Building..Tanmay'
+            }
         }
-       }
-   }
+        stage('Run a java Program') {
+            steps {
+                build 'java'
+                echo "Successfull DONE"
+            }
+        }
+       
+        stage('Copying artifacts') {
+            steps {
+                 build 'arifacts'
+                echo "ARCHIVING DONE"
+            }
+        }
+    }
+}
