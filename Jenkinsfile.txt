@@ -16,7 +16,7 @@ options {
             }
         }
        
-        stage('Coping artifacts') {
+        stage('Copying artifacts') {
             steps {
                  build 'arifacts'
                 echo "ARCHIVING DONE"
